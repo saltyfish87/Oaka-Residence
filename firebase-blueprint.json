@@ -1,0 +1,47 @@
+{
+  "entities": {
+    "LandingContent": {
+      "title": "Landing Page Content",
+      "description": "The configuration for the landing page",
+      "type": "object",
+      "properties": {
+        "projectName": { "type": "string" },
+        "developer": { "type": "string" },
+        "whatsappNumber": { "type": "string" },
+        "whatsappMessage": { "type": "string" },
+        "hero": { "type": "object" },
+        "overview": { "type": "object" },
+        "keyFeatures": { "type": "object" },
+        "location": { "type": "object" },
+        "facilities": { "type": "object" },
+        "layouts": { "type": "object" },
+        "gallery": { "type": "object" },
+        "footer": { "type": "object" }
+      }
+    },
+    "Inquiry": {
+      "title": "User Inquiry",
+      "description": "A lead generated from the landing page",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "message": { "type": "string" },
+        "projectName": { "type": "string" },
+        "submittedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "phone", "projectName", "submittedAt"]
+    }
+  },
+  "firestore": {
+    "/settings/content": {
+      "schema": "LandingContent",
+      "description": "Global landing page content"
+    },
+    "/inquiries/{inquiryId}": {
+      "schema": "Inquiry",
+      "description": "User inquiries"
+    }
+  }
+}

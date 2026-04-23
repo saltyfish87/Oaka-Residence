@@ -1,0 +1,55 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    // Collection: settings
+    // Document: content
+    // Fields: All fields in LandingContent interface
+    //
+    // Collection: inquiries
+    // Document ID: auto-generated
+    // Fields: name, email, phone, message, timestamp
+    // ===============================================================
+
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email == "saltyfish1987@gmail.com" &&
+        request.auth.token.email_verified == true
+      );
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    function isValidInquiry(data) {
+      // Allow name, email, phone, message, projectName, submittedAt
+      return data.keys().hasAll(['name', 'email', 'phone', 'projectName', 'submittedAt']) &&
+             data.name is string && data.name.size() >= 2 && data.name.size() <= 100 &&
+             isValidEmail(data.email) &&
+             data.phone is string && data.phone.size() >= 10 && data.phone.size() <= 20 &&
+             data.projectName is string && data.projectName.size() > 0 &&
+             (data.message == "" || (data.message is string && data.message.size() <= 1000)) &&
+             data.submittedAt == request.time;
+    }
+
+    // Rules
+    match /settings/content {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /inquiries/{inquiryId} {
+      allow read: if isAdmin();
+      allow create: if isValidInquiry(request.resource.data);
+      allow update, delete: if isAdmin();
+    }
+  }
+}
