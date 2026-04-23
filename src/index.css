@@ -18,6 +18,10 @@
   h1, h2, h3, h4, .serif {
     @apply font-serif;
   }
+
+  img:not([src*="icon"]):not(.no-zoom) {
+    @apply cursor-zoom-in;
+  }
 }
 
 .text-gold {

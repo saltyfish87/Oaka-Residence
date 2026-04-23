@@ -6,9 +6,10 @@ import { ChevronDown } from "lucide-react";
 interface HeroProps {
   content: LandingContent;
   onInquire: () => void;
+  onBrochure: () => void;
 }
 
-export default function Hero({ content, onInquire }: HeroProps) {
+export default function Hero({ content, onInquire, onBrochure }: HeroProps) {
   return (
     <section className="relative h-screen w-full overflow-hidden flex items-center justify-center">
       {/* Background Image */}
@@ -52,12 +53,12 @@ export default function Hero({ content, onInquire }: HeroProps) {
               <span className="relative z-10">Register My Interest</span>
               <div className="absolute inset-0 z-0 h-full w-0 bg-oaka-green transition-all duration-300 group-hover:w-full" />
             </button>
-            <a
-              href="#inquiry"
+            <button
+              onClick={onBrochure}
               className="group relative w-full overflow-hidden border border-white/50 bg-white/10 px-12 py-5 text-xs font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md transition-all sm:w-auto hover:bg-white hover:text-oaka-green"
             >
               <span className="relative z-10">View Brochure</span>
-            </a>
+            </button>
           </div>
         </motion.div>
 

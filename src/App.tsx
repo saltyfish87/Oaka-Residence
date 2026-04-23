@@ -17,7 +17,7 @@ import Footer from "./components/Footer";
 import AdminPanel from "./components/AdminPanel";
 import Editable from "./components/Editable";
 import ErrorBoundary from "./components/ErrorBoundary";
-import { MessageCircle, Edit3, Save, Layout } from "lucide-react";
+import { MessageCircle, Edit3, Save, Layout, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { handleFirestoreError, OperationType } from "./firebase";
 import { cn } from "./lib/utils";
@@ -96,7 +96,55 @@ export default function App() {
     }
   }, [content.seo, content.hero.imageUrl]);
 
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  // Hidden admin trigger: Click footer copyright 5 times
+  const [clickCount, setClickCount] = useState(0);
+  useEffect(() => {
+    if (clickCount >= 5) {
+      handleLogin();
+      setClickCount(0);
+    }
+  }, [clickCount]);
+
+  // Handle URL param ?admin=1 for login
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("admin") === "1") {
+      handleLogin();
+      // Clean up URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
+
   const isAdmin = user?.email === "saltyfish1987@gmail.com";
+
+  // Global Image Click Handler for Lightbox
+  useEffect(() => {
+    const handleImageClick = (e: MouseEvent) => {
+      const path = e.composedPath() as HTMLElement[];
+      let img = path.find(el => el && el.tagName === "IMG") as HTMLImageElement;
+      
+      // If we clicked an overlay, look for a sibling image in the same container
+      if (!img) {
+        const target = e.target as HTMLElement;
+        const parent = target.parentElement;
+        if (parent) {
+          img = parent.querySelector('img') as HTMLImageElement;
+        }
+      }
+      
+      // Filter out icons, small UI elements, and specific excludes
+      if (img && 
+          !img.src.includes("icon") && 
+          (img.naturalWidth > 100 || img.width > 100) && 
+          !img.closest('.admin-exclude')) {
+        setSelectedImage(img.src);
+      }
+    };
+    window.addEventListener("click", handleImageClick, true); // Use capture to trigger before other events
+    return () => window.removeEventListener("click", handleImageClick, true);
+  }, []);
 
   // Auto-open panel on login if admin
   useEffect(() => {
@@ -115,6 +163,12 @@ export default function App() {
 
   const openWhatsApp = () => {
     const url = `https://wa.me/${content.whatsappNumber.replace(/\+/g, "")}?text=${encodeURIComponent(content.whatsappMessage)}`;
+    window.open(url, "_blank");
+  };
+
+  const openBrochureWhatsApp = () => {
+    const msg = "[oaka] Admin, please send me the brochure. thanks";
+    const url = `https://wa.me/${content.whatsappNumber.replace(/\+/g, "")}?text=${encodeURIComponent(msg)}`;
     window.open(url, "_blank");
   };
 
@@ -149,44 +203,51 @@ export default function App() {
           >
             {/* Top Admin Bar */}
             {isAdmin && (
-              <div className="fixed top-0 left-0 right-0 z-[60] bg-slate-900 text-white px-6 py-2 flex items-center justify-between border-b border-white/10 shadow-2xl">
-                <div className="flex items-center gap-4">
-                  <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em]">Logged in as Administrator</span>
-                </div>
+              <div className="fixed top-0 left-0 right-0 z-[100] bg-zinc-950 text-white px-4 py-2 flex items-center justify-between border-b border-white/5 shadow-2xl h-[50px]">
                 <div className="flex items-center gap-3">
+                  <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] hidden sm:inline">Admin Mode</span>
+                </div>
+                <div className="flex items-center gap-2">
                   <button 
                     onClick={() => setIsEditMode(!isEditMode)}
                     className={cn(
-                      "flex items-center gap-2 px-4 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider transition-all",
+                      "flex items-center gap-2 px-3 py-1.5 rounded text-[9px] font-bold uppercase tracking-wider transition-all",
                       isEditMode ? "bg-oaka-gold text-oaka-green" : "bg-white/10 hover:bg-white/20"
                     )}
                   >
-                    <Edit3 size={14} />
-                    {isEditMode ? "Edit Mode ON" : "Turn On EDIT Mode"}
+                    <Edit3 size={12} />
+                    {isEditMode ? "Edit Mode: ON" : "Edit Mode: OFF"}
                   </button>
                   <button 
                     onClick={() => setIsAdminOpen(!isAdminOpen)}
-                    className="flex items-center gap-2 px-4 py-1.5 bg-oaka-gold text-oaka-green rounded text-[10px] font-bold uppercase tracking-wider hover:brightness-110 transition-all shadow-lg"
+                    className="flex items-center gap-2 px-3 py-1.5 bg-oaka-gold text-oaka-green rounded text-[9px] font-bold uppercase tracking-wider hover:brightness-110 transition-all shadow-lg"
                   >
-                    <Layout size={14} />
-                    Open Content Manager
+                    <Layout size={12} />
+                    {isAdminOpen ? "Close Manager" : "Open Manager"}
                   </button>
                 </div>
               </div>
             )}
 
-            <div className={cn("bg-oaka-bg text-oaka-green selection:bg-oaka-gold selection:text-oaka-green", isAdmin ? "pt-10" : "")}>
+            <div className={cn("bg-oaka-bg text-oaka-green selection:bg-oaka-gold selection:text-oaka-green transition-all", isAdmin ? "pt-[50px]" : "")}>
               <Navbar 
                 content={content} 
                 onInquire={openWhatsApp} 
                 onLogin={handleLogin}
                 isLoggedIn={!!user}
+                className={isAdmin ? "top-[50px]" : "top-0"}
               />
+
+              {/* Emergency Floating Admin Trigger Removed for Privacy */}
               
               <main>
                 <Editable isEditMode={isEditMode} onEdit={() => startEditing("hero")}>
-                  <Hero content={content} onInquire={openWhatsApp} />
+                  <Hero 
+                    content={content} 
+                    onInquire={openWhatsApp} 
+                    onBrochure={openBrochureWhatsApp}
+                  />
                 </Editable>
                 <Editable isEditMode={isEditMode} onEdit={() => startEditing("overview")}>
                   <Overview content={content} />
@@ -213,7 +274,7 @@ export default function App() {
                 <Footer 
                   content={content} 
                   onWhatsApp={openWhatsApp} 
-                  onLogin={handleLogin}
+                  onLogin={() => setClickCount(prev => prev + 1)}
                   isLoggedIn={!!user}
                 />
               </Editable>
@@ -275,6 +336,39 @@ export default function App() {
                       });
                     }}
                   />
+                )}
+              </AnimatePresence>
+
+              {/* Lightbox / Image Popup */}
+              <AnimatePresence>
+                {selectedImage && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/95 p-4 backdrop-blur-xl md:p-12"
+                    onClick={() => setSelectedImage(null)}
+                  >
+                    <motion.button
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors"
+                      onClick={() => setSelectedImage(null)}
+                    >
+                      <X size={32} strokeWidth={1.5} />
+                    </motion.button>
+                    
+                    <motion.img
+                      initial={{ scale: 0.9, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ type: "spring", damping: 25, stiffness: 150 }}
+                      src={selectedImage}
+                      alt="Lightbox View"
+                      className="max-h-full max-w-full rounded-lg object-contain shadow-2xl"
+                      referrerPolicy="no-referrer"
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                  </motion.div>
                 )}
               </AnimatePresence>
             </div>

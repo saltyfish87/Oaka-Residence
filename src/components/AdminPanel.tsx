@@ -123,42 +123,37 @@ export default function AdminPanel({ content, initialSection, onClose, onSave }:
 
   return (
     <motion.div
-      initial={{ scale: 0.9, opacity: 0, x: 20 }}
+      initial={{ x: "100%" }}
       animate={{ 
-        scale: 1, 
-        opacity: 1, 
         x: 0,
-        height: isMinimized ? "64px" : "80vh",
-        width: isMinimized ? "260px" : "400px"
+        width: isMinimized ? "80px" : "400px"
       }}
-      exit={{ scale: 0.9, opacity: 0, x: 20 }}
-      drag
-      dragControls={dragControls}
-      dragListener={false}
-      dragMomentum={false}
+      exit={{ x: "100%" }}
+      transition={{ type: "spring", damping: 25, stiffness: 200 }}
       className={cn(
-        "fixed bottom-10 right-10 z-[100] flex flex-col bg-white shadow-[0_20px_60px_rgba(0,0,0,0.15)] rounded-2xl border border-slate-100 overflow-hidden transition-all duration-300",
+        "fixed top-0 right-0 z-[100] h-full flex flex-col bg-white shadow-[-10px_0_40px_rgba(0,0,0,0.1)] border-l border-slate-100 transition-all duration-300",
         isMinimized ? "bg-slate-900 border-slate-800" : "bg-white"
       )}
     >
-      {/* Header / Drag Handle */}
+      {/* Header */}
       <div 
-        onPointerDown={(e) => dragControls.start(e)}
         className={cn(
-          "flex cursor-grab items-center justify-between border-b px-5 py-4 active:cursor-grabbing select-none transition-colors",
+          "flex items-center justify-between border-b px-5 py-6 select-none transition-colors",
           isMinimized ? "border-white/10" : "bg-slate-50/50 border-slate-100"
         )}
       >
         <div className="flex items-center gap-3 overflow-hidden">
-          <GripHorizontal size={18} className={isMinimized ? "text-white/20" : "text-slate-300"} />
-          <div className="truncate">
-            <h2 className={cn("text-xs font-bold leading-tight", isMinimized ? "text-white" : "text-slate-900")}>
-              Editor Control
-            </h2>
-            {!isMinimized && (
-              <p className="text-[10px] font-bold uppercase tracking-widest text-oaka-gold truncate">{activeSection}</p>
-            )}
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-oaka-green text-oaka-gold shadow-lg">
+            <Layout size={18} />
           </div>
+          {!isMinimized && (
+            <div className="truncate">
+              <h2 className="text-xs font-bold leading-tight text-slate-900 uppercase tracking-widest">
+                Content Manager
+              </h2>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-oaka-gold truncate">Section: {activeSection}</p>
+            </div>
+          )}
         </div>
         <div className="flex items-center gap-2">
           <button 
@@ -167,19 +162,18 @@ export default function AdminPanel({ content, initialSection, onClose, onSave }:
               "rounded-lg p-2 transition-colors",
               isMinimized ? "text-white/40 hover:bg-white/10 hover:text-white" : "text-slate-400 hover:bg-slate-100 hover:text-slate-600"
             )}
-            title={isMinimized ? "Expand Editor" : "Minimize Editor"}
+            title={isMinimized ? "Expand" : "Minimize"}
           >
             {isMinimized ? <Maximize2 size={16} /> : <Minimize2 size={16} />}
           </button>
-          <button 
-            onClick={onClose} 
-            className={cn(
-              "rounded-lg p-2 transition-colors",
-              isMinimized ? "text-white/40 hover:bg-red-500/20 hover:text-red-400" : "text-slate-400 hover:bg-red-50 hover:text-red-500"
-            )}
-          >
-            <X size={16} />
-          </button>
+          {!isMinimized && (
+            <button 
+              onClick={onClose} 
+              className="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-500 transition-colors"
+            >
+              <X size={18} />
+            </button>
+          )}
         </div>
       </div>
 
@@ -849,15 +843,15 @@ export default function AdminPanel({ content, initialSection, onClose, onSave }:
                 </div>
               )}
 
-              <div className="pt-8 mt-8 border-t border-slate-100 flex justify-center">
+              <div className="pt-8 mt-8 border-t border-slate-100 flex justify-center pb-12">
                 <button onClick={handleLogout} className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-red-500 hover:text-red-600 transition-colors">
                   <Trash2 size={12} />
                   Sign Out
                 </button>
               </div>
-              </div>
-        </>
-      )}
-    </motion.div>
-  );
+            </div>
+          </>
+        )}
+      </motion.div>
+    );
 }

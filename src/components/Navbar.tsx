@@ -8,9 +8,10 @@ interface NavbarProps {
   onInquire: () => void;
   onLogin?: () => void;
   isLoggedIn?: boolean;
+  className?: string;
 }
 
-export default function Navbar({ content, onInquire, onLogin, isLoggedIn }: NavbarProps) {
+export default function Navbar({ content, onInquire, onLogin, isLoggedIn, className }: NavbarProps) {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
@@ -32,7 +33,8 @@ export default function Navbar({ content, onInquire, onLogin, isLoggedIn }: Navb
     <nav
       className={cn(
         "fixed top-0 left-0 z-40 w-full transition-all duration-500",
-        isScrolled ? "bg-oaka-bg/95 py-3 shadow-sm backdrop-blur-md" : "bg-transparent py-8"
+        isScrolled ? "bg-oaka-bg/95 py-3 shadow-sm backdrop-blur-md" : "bg-transparent py-8",
+        className
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-12">
@@ -79,17 +81,6 @@ export default function Navbar({ content, onInquire, onLogin, isLoggedIn }: Navb
               <span className="absolute -bottom-1 left-0 h-[1px] w-0 bg-oaka-gold transition-all group-hover:w-full" />
             </a>
           ))}
-          {!isLoggedIn && onLogin && (
-            <button 
-              onClick={onLogin}
-              className={cn(
-                "px-6 py-2 border rounded-full text-[10px] font-bold uppercase tracking-widest transition-all hover:bg-white/10",
-                isScrolled ? "border-oaka-green text-oaka-green" : "border-white text-white"
-              )}
-            >
-              Admin Access
-            </button>
-          )}
           <button
             onClick={onInquire}
             className={cn(
@@ -103,37 +94,38 @@ export default function Navbar({ content, onInquire, onLogin, isLoggedIn }: Navb
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden"
+          className="lg:hidden"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? (
-            <X className={isScrolled ? "text-slate-900" : "text-white"} />
+            <X className={isScrolled ? "text-oaka-green" : "text-white"} />
           ) : (
-            <Menu className={isScrolled ? "text-slate-900" : "text-white"} />
+            <Menu className={isScrolled ? "text-oaka-green" : "text-white"} />
           )}
         </button>
       </div>
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-white p-6 shadow-xl md:hidden">
-          <div className="flex flex-col gap-4">
+        <div className="absolute top-full left-0 w-full bg-white p-8 shadow-2xl lg:hidden border-t border-slate-100">
+          <div className="flex flex-col gap-6">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-medium text-slate-600 hover:text-amber-600"
+                className="text-sm font-bold uppercase tracking-widest text-oaka-green hover:text-oaka-gold transition-colors"
               >
                 {link.name}
               </a>
             ))}
+            <div className="h-px bg-slate-100 my-2" />
             <button
               onClick={() => {
                 onInquire();
                 setIsMobileMenuOpen(false);
               }}
-              className="mt-2 w-full rounded-xl bg-amber-600 py-4 text-center font-bold text-white"
+              className="w-full rounded-lg bg-oaka-gold py-4 text-center text-xs font-bold uppercase tracking-widest text-oaka-green shadow-lg"
             >
               WhatsApp Inquiry
             </button>
