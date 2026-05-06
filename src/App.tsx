@@ -138,7 +138,8 @@ export default function App() {
       if (img && 
           !img.src.includes("icon") && 
           (img.naturalWidth > 100 || img.width > 100) && 
-          !img.closest('.admin-exclude')) {
+          !img.closest('.admin-exclude') &&
+          !img.closest('.lightbox-exclude')) {
         setSelectedImage(img.src);
       }
     };

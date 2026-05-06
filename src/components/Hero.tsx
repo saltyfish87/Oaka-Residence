@@ -17,7 +17,10 @@ export default function Hero({ content, onInquire, onBrochure }: HeroProps) {
         <img
           src={content.hero.imageUrl}
           alt="OAKA Residences Hero"
-          className="h-full w-full object-cover scale-105"
+          loading="eager"
+          decoding="sync"
+          fetchPriority="high"
+          className="h-full w-full object-cover scale-105 lightbox-exclude"
           referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-oaka-green/40 backdrop-brightness-75" />

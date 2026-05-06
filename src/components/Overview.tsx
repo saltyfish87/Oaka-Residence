@@ -54,6 +54,8 @@ export default function Overview({ content }: { content: LandingContent }) {
               <img
                 src={content.overview.imageUrl}
                 alt="OAKA Residences Overview"
+                loading="lazy"
+                decoding="async"
                 className="h-full w-full object-cover grayscale-[0.2] contrast-[1.1]"
                 referrerPolicy="no-referrer"
               />

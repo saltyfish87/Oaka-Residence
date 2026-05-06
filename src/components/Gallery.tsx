@@ -27,6 +27,8 @@ export default function Gallery({ content }: { content: LandingContent }) {
               <img
                 src={image.url}
                 alt={image.title}
+                loading="lazy"
+                decoding="async"
                 className="w-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:opacity-40"
                 referrerPolicy="no-referrer"
               />

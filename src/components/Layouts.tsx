@@ -52,6 +52,8 @@ export default function Layouts({ content }: { content: LandingContent }) {
               <img
                 src={content.layouts.types[activeTab].imageUrl}
                 alt={content.layouts.types[activeTab].type}
+                loading="lazy"
+                decoding="async"
                 className="mx-auto max-h-[600px] w-auto object-contain transition-transform duration-1000 group-hover:scale-105"
                 referrerPolicy="no-referrer"
               />

@@ -79,6 +79,8 @@ export default function Location({ content }: { content: LandingContent }) {
                 <img
                   src={content.location.imageUrl}
                   alt="Location Map"
+                  loading="lazy"
+                  decoding="async"
                   className="h-[600px] w-full object-cover grayscale-[0.3] contrast-[1.1] transition-transform duration-1000 group-hover:scale-110 group-hover:grayscale-0"
                   referrerPolicy="no-referrer"
                 />
