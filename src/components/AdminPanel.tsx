@@ -94,7 +94,7 @@ export default function AdminPanel({ content, initialSection, onClose, onSave }:
     { id: "layouts", label: "Layout Plans" },
     { id: "gallery", label: "Gallery" },
     { id: "footer", label: "Contact Info" },
-    { id: "ctaEmbedCode", label: "Embed Code (CRM)" },
+    { id: "ctaEmbedCode", label: "Form Settings" },
     { id: "seo", label: "SEO & Google" },
   ];
 
@@ -758,21 +758,20 @@ export default function AdminPanel({ content, initialSection, onClose, onSave }:
 
               {activeSection === "ctaEmbedCode" && (
                 <div className="space-y-6">
-                  <h3 className="text-xl font-serif text-oaka-green">External Form Embed</h3>
+                  <h3 className="text-xl font-serif text-oaka-green">Form Notification Settings</h3>
                   <div className="space-y-4 rounded-xl border border-slate-100 bg-slate-50/50 p-4">
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">GoHighLevel / External Embed Code</label>
-                      <textarea
-                        rows={10}
-                        value={localContent.ctaEmbedCode}
-                        onChange={(e) => setLocalContent({ ...localContent, ctaEmbedCode: e.target.value })}
-                        className="w-full rounded-lg border border-slate-200 bg-white p-3 text-xs font-mono outline-none focus:border-oaka-gold"
-                        placeholder="Paste your <iframe src='...'> or <script> code here..."
+                      <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Recipient Email (FormSubmit)</label>
+                      <input
+                        type="email"
+                        disabled
+                        value="shyanyeews@gmail.com"
+                        className="w-full rounded-lg border border-slate-200 bg-slate-100 p-3 text-xs font-mono text-slate-600 outline-none"
                       />
+                      <p className="text-[10px] text-slate-500 leading-relaxed">
+                        Inquiries submitted on the website are routed directly to <strong>shyanyeews@gmail.com</strong> via FormSubmit, as well as saved to the internal leads database.
+                      </p>
                     </div>
-                    <p className="text-[9px] text-slate-400 italic">
-                      This code will replace the default inquiry form. Make sure to paste the full HTML embed code provided by GoHighLevel or your CRM.
-                    </p>
                   </div>
                 </div>
               )}
