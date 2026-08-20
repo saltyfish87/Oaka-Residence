@@ -99,7 +99,7 @@ export default function Layouts({ content }: { content: LandingContent }) {
 
               <div className="pt-12 border-t border-oaka-green/10">
                 <a 
-                  href={`https://wa.me/60195598932?text=${encodeURIComponent(`[OAKA] Hi, i am interested in ${content.layouts.types[activeTab].type}, please contact me.`)}`}
+                  href={`https://wa.me/${(content.whatsappNumber || "+60108278932").replace(/\D/g, "")}?text=${encodeURIComponent(`[OAKA] Hi, i am interested in ${content.layouts.types[activeTab].type}, please contact me.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group relative flex items-center justify-between overflow-hidden border border-oaka-gold bg-oaka-gold px-8 py-5 text-[10px] font-bold uppercase tracking-[0.3em] text-oaka-green transition-all hover:bg-transparent hover:text-white"

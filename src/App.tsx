@@ -34,7 +34,17 @@ export default function App() {
     const path = "settings/content";
     const unsub = onSnapshot(doc(db, "settings", "content"), (docSnap) => {
       if (docSnap.exists()) {
-        setContent(docSnap.data() as LandingContent);
+        const data = docSnap.data() as LandingContent;
+        if (data.whatsappNumber === "+60195598932" || data.whatsappNumber === "60195598932") {
+          data.whatsappNumber = "+60108278932";
+        }
+        if (data.footer && (data.footer.phone === "+60195598932" || data.footer.phone === "60195598932")) {
+          data.footer.phone = "+60108278932";
+        }
+        setContent(data);
+        if (auth.currentUser?.email === "saltyfish1987@gmail.com" && (docSnap.data().whatsappNumber !== data.whatsappNumber || docSnap.data().footer?.phone !== data.footer?.phone)) {
+          setDoc(doc(db, "settings", "content"), data).catch(() => {});
+        }
       } else {
         if (auth.currentUser?.email === "saltyfish1987@gmail.com") {
           setDoc(doc(db, "settings", "content"), DEFAULT_CONTENT).catch(err => {

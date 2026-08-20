@@ -64,7 +64,7 @@ export const DEFAULT_CONTENT: LandingContent = {
   projectName: "OAKA Residences @ Bukit Jalil",
   developer: "Berjaya Land Berhad",
   logoUrl: "",
-  whatsappNumber: "+60195598932",
+  whatsappNumber: "+60108278932",
   whatsappMessage: "[oaka] Hi Admin. i interested in oaka residence. please contact me.",
   hero: {
     title: "Luxury Living with a Golf Course View",
@@ -131,7 +131,7 @@ export const DEFAULT_CONTENT: LandingContent = {
   },
   footer: {
     address: "OAKA Residences Sales Gallery, Bukit Jalil, Kuala Lumpur",
-    phone: "+60195598932",
+    phone: "+60108278932",
     agentName: "Yee Woei Shyan",
     renNumber: "REN 46305",
     agencyName: "IQI Holdings SDN BHD",
