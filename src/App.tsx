@@ -35,10 +35,10 @@ export default function App() {
     const unsub = onSnapshot(doc(db, "settings", "content"), (docSnap) => {
       if (docSnap.exists()) {
         const data = docSnap.data() as LandingContent;
-        if (data.whatsappNumber === "+60195598932" || data.whatsappNumber === "60195598932") {
+        if (data.whatsappNumber === "+60108278932" || data.whatsappNumber === "60108278932") {
           data.whatsappNumber = "+60108278932";
         }
-        if (data.footer && (data.footer.phone === "+60195598932" || data.footer.phone === "60195598932")) {
+        if (data.footer && (data.footer.phone === "+60108278932" || data.footer.phone === "60108278932")) {
           data.footer.phone = "+60108278932";
         }
         setContent(data);

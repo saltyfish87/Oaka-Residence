@@ -134,7 +134,7 @@ export const DEFAULT_CONTENT: LandingContent = {
     phone: "+60108278932",
     agentName: "Yee Woei Shyan",
     renNumber: "REN 46305",
-    agencyName: "IQI Holdings SDN BHD",
+    agencyName: "IQI Realty Sdn Bhd",
     agencyReg: "E(1)1584",
   },
   ctaEmbedCode: "",
