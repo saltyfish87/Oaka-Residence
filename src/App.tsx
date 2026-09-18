@@ -14,6 +14,7 @@ import Layouts from "./components/Layouts";
 import Gallery from "./components/Gallery";
 import InquiryForm from "./components/InquiryForm";
 import Footer from "./components/Footer";
+import FAQ from "./components/FAQ";
 import AdminPanel from "./components/AdminPanel";
 import Editable from "./components/Editable";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -278,6 +279,7 @@ export default function App() {
                 <Editable isEditMode={isEditMode} onEdit={() => startEditing("gallery")}>
                   <Gallery content={content} />
                 </Editable>
+                <FAQ />
                 <InquiryForm content={content} />
               </main>
 
