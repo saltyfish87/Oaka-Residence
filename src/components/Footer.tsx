@@ -103,6 +103,7 @@ export default function Footer({ content, onWhatsApp, onLogin, isLoggedIn }: Foo
             >
               © {new Date().getFullYear()} OAKA Residences Marketing Portfolio.
             </p>
+            <p className="mt-2">Also listed on <a href="https://www.propertyportal.my/project/oaka-res" className="underline">propertyportal.my: OAKA Residences</a> · <a href="https://www.propertyportal.my/" className="underline">all Kuala Lumpur new launches</a>.</p>
             <div className="flex gap-8 mt-6 md:mt-0">
               <a href="#" className="hover:text-oaka-gold transition-colors">Privacy Policy</a>
             </div>

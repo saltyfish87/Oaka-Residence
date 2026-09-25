@@ -384,7 +384,7 @@ export default function InquiryForm({ content }: { content: LandingContent }) {
                   <div className="flex h-8 w-8 items-center justify-center border border-oaka-gold/30 text-oaka-gold rounded-full bg-oaka-gold/5">
                     <CheckCircle size={16} strokeWidth={1.5} />
                   </div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-white/80">Early Bird Rebates</p>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-white/80">Latest Price List</p>
                 </div>
               </div>
 
