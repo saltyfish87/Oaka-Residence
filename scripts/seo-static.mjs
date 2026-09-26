@@ -24,7 +24,7 @@ const today = new Date().toISOString().slice(0, 10);
 const SITE = cfg.siteUrl.replace(/\/$/, "");
 const AGENT = {
   name: "Yee Woei Shyan", ren: "REN 46305", company: "IQI Realty Sdn Bhd", phone: "+60108278932", phoneDisplay: "+60 10-827 8932", email: "shyanyeews@gmail.com",
-  sameAs: ["https://www.youtube.com/@shyanyee", "https://www.instagram.com/shyanyee/", "https://www.facebook.com/shyanyeeconsultant/", "https://www.shyanyee.com/", "https://www.propertyportal.my/"]
+  sameAs: ["https://maps.google.com/?cid=3195643739952877602", "https://www.youtube.com/@shyanyee", "https://www.instagram.com/shyanyee/", "https://www.facebook.com/shyanyeeconsultant/", "https://www.shyanyee.com/", "https://www.propertyportal.my/"]
 };
 const ABOUT = {
   en: `${AGENT.name} (${AGENT.ren}) is a licensed real estate negotiator with ${AGENT.company}, marketing new launches in Kuala Lumpur, Selangor and Johor Bahru. Facts on this page come from the developer's records; prices are the developer's indicative prices and change without notice. This is an independent marketing site, not the developer's website. WhatsApp ${AGENT.phoneDisplay} or email ${AGENT.email} for the current price list, floor plans and a viewing.`,
