@@ -70,7 +70,7 @@ function body(lang) {
 function graph(lang) {
   const url = lang === "zh" ? `${SITE}/zh` : `${SITE}/`;
   const g = [];
-  if (!existingTypes.has("RealEstateAgent") || lang === "zh") g.push({ "@type": "RealEstateAgent", "@id": `${SITE}/#agent`, "name": AGENT.name, "identifier": AGENT.ren, "telephone": AGENT.phone, "email": AGENT.email, "url": `${SITE}/`, "parentOrganization": { "@type": "Organization", "name": AGENT.company }, "sameAs": AGENT.sameAs });
+  if (!existingTypes.has("RealEstateAgent") || lang === "zh") g.push({ "@type": "RealEstateAgent", "@id": `${SITE}/#agent`, "name": AGENT.name, "alternateName": "Shyan Yee", "identifier": AGENT.ren, "telephone": AGENT.phone, "email": AGENT.email, "url": `${SITE}/`, "parentOrganization": { "@type": "Organization", "name": AGENT.company }, "sameAs": AGENT.sameAs });
   if (!existingTypes.has("WebSite") || lang === "zh") g.push({ "@type": "WebSite", "@id": `${SITE}/#website`, "url": `${SITE}/`, "name": L(cfg.title, "en"), "inLanguage": ["en", "zh-CN"] });
   if (!existingTypes.has("BreadcrumbList") || lang === "zh") g.push({ "@type": "BreadcrumbList", "itemListElement": [{ "@type": "ListItem", "position": 1, "name": lang === "zh" ? "首页" : "Home", "item": url }] });
   if (cfg.schema && (!existingTypes.has("ApartmentComplex") || lang === "zh")) g.push({ "@type": "ApartmentComplex", "@id": `${url}#complex`, "name": L(cfg.title, lang), "url": url, "image": cfg.ogImage, "description": (L(cfg.summary, lang) || [])[0], "address": cfg.schema.address, ...(cfg.schema.geo ? { "geo": { "@type": "GeoCoordinates", ...cfg.schema.geo } } : {}), ...(cfg.schema.units ? { "numberOfAccommodationUnits": cfg.schema.units } : {}), ...(cfg.schema.floors ? { "numberOfFloors": cfg.schema.floors } : {}) });
