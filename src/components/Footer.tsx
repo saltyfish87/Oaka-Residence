@@ -98,7 +98,6 @@ export default function Footer({ content, onWhatsApp, onLogin, isLoggedIn }: Foo
           <div className="flex flex-col md:flex-row items-center justify-between pt-12 border-t border-white/5 text-[9px] font-bold uppercase tracking-[0.4em] text-white/20">
             <p 
               className="cursor-default select-none"
-              onClick={onLogin}
               title="OAKA Residences"
             >
               © {new Date().getFullYear()} OAKA Residences Marketing Portfolio.
